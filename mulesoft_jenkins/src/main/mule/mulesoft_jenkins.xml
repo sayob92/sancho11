@@ -22,6 +22,5 @@ payload]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
 		<logger level="INFO" doc:name="Logger" doc:id="277d4a2b-a414-447d-8491-b5a7683585a6" message="#[payload]"/>
-		<set-variable value="#[payload]" doc:name="Set Variable" doc:id="ddd4015e-bfcd-42f8-826d-3374c7ad4619" variableName="sancho"/>
 	</flow>
 </mule>
