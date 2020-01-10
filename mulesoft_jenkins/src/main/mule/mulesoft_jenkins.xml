@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="5bc5539f-16ab-4be3-9dad-b8c33536c53b">
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="mulesoft_jenkinsFlow" doc:id="6b7242ad-cda8-4ce9-aebc-56c26be6a6c6" >
+		<http:listener doc:name="Listener" doc:id="120b6083-19c7-46a9-a1b7-253d66b24758" path="/jenkins" config-ref="HTTP_Listener_config"/>
+		<set-payload value='#[{ "status" : "success",
+  "message":"hello friends"
+}]' doc:name="Set Payload" doc:id="7c77dc9d-bf47-492e-9000-1c1d32225da2" />
+		<ee:transform doc:name="Transform Message" doc:id="aa2387da-9941-418b-a5fa-2ce7e889405e" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="277d4a2b-a414-447d-8491-b5a7683585a6" message="#[payload]"/>
+	</flow>
+</mule>
